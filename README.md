@@ -8,10 +8,10 @@ This repo contains my solutions and notes for 600+ leetcode questions mainly in 
 1. [Competitive Programmer's Handbook](https://cses.fi/book/book.pdf)
 
 ### YouTube
-1. [Google Engineer Explains](https://www.youtube.com/channel/UClPLjM6vk6sjd1OuFSoxx-Q), study the way he approaches a leetcode question during interviews.
+1. [Google Engineer Explains](https://www.youtube.com/channel/UClPLjM6vk6sjd1OuFSoxx-Q), great materials to study how to approach coding interviews.
 1. [Huifeng Guan](https://www.youtube.com/channel/UCY5Z0of98W-YSdmPgAe1DaA), 每日一题. The best leetcode practice channel ever.
 1. [William Lin](https://www.youtube.com/channel/UCKuDLsO0Wwef53qdHPjbU2Q), just for fun. Take a break and think about what stupid I am :)
-1. [WilliamFiset](https://www.youtube.com/channel/UCD8yeTczadqdARzQUp29PJw), his graph theory playlist is a must-watch for beginners.  
+1. [WilliamFiset](https://www.youtube.com/channel/UCD8yeTczadqdARzQUp29PJw), his graph theory playlist is a must-watch for beginners in my opinion.  
 
 ## Algorithms
 1. [Rolling Hashing](https://www.youtube.com/watch?v=BQ9E-2umSWc)
