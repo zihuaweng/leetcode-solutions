@@ -16,7 +16,7 @@ This repo contains my solutions and notes for 600+ leetcode questions mainly in 
 ## Algorithms
 1. [Rolling Hashing](https://www.youtube.com/watch?v=BQ9E-2umSWc)
 2. [Rabin–Karp algorithm](https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm)
-    - string-searching algorithm uses hashing to **find an exact match of a pattern string in a text**. It uses a **rolling hash** to quickly filter out positions of the text that cannot match the pattern, and then checks for a match at the remaining positions. Generalizations of the same idea can be used to find more than one match of a single pattern, or to find matches for more than one pattern.
+    - String-searching algorithm uses hashing to **find an exact match of a pattern string in a text**. It uses a **rolling hash** to quickly filter out positions of the text that cannot match the pattern, and then checks for a match at the remaining positions. Generalizations of the same idea can be used to find more than one match of a single pattern, or to find matches for more than one pattern.
     - two steps: first hashing two substrings, if they have the same hash value, check each character if they match.
 3. [Kadane’s Algorithm, DP,](https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d#:~:text=Kadane's%20algorithm%20is%20able%20to,runtime%20of%20O(n).)
     - DP, Maximum Subarray Problem
@@ -35,123 +35,87 @@ This repo contains my solutions and notes for 600+ leetcode questions mainly in 
     - The graph must be Directed Acyclic Graph (DAG).
     - For instance, the vertices of the graph may represent tasks to be performed, and the edges may represent constraints that one task must be performed before another; in this application, a topological ordering is just a valid sequence for the tasks.
     - Find Eulerian path, school class prerequisites, visit location order
-    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
+    - [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
     
 7. [Karnaugh Maps](https://en.wikipedia.org/wiki/Karnaugh_map)
     - The Karnaugh map (KM or K-map) is a method of simplifying Boolean algebra expressions.
-    - [video](https://www.youtube.com/watch?v=RO5alU6PpSU)
+    - [Video](https://www.youtube.com/watch?v=RO5alU6PpSU)
 
 8. knapsack question
-    - select a subset from an array where their sum equals a target
+    - Select a subset from an array where their sum equals a target
 
 
 
 ## Category
-## Union Find
-### Union Find by Rank
-```python
-323. Number of Connected Components in an Undirected Graph
-
-parent = [x for x in range(n)]
-
-def find(x):  
-    if parent[x] != x:
-        parent[x] = find(parent[x])    # path compression
-    return parent[x]
-
-def union(x, y):
-    p_x = find(x)
-    p_y = find(y)
-    if p_x != p_y:               
-        parent[p_y] = p_x
-        
-for u, v in edges:
-    union(u, v)
-```
-Union Find By Rank
-```python
-parent, rank = {}, {}
-def find(x):
-    if parent[x] != x:
-        parent[x] = find(parent[x])
-    return parent[x]
-def union(x, y):
-    x, y = find(x), find(y)
-    if x != y:
-        if rank[x] < rank[y]:
-            x, y = y, x
-        parent[y] = x
-        rank[x] += rank[x] == rank[y]
-```
 ### Graph
 #### Representation
 1. Adjacency Matrix
-- Pros
-    - Space efficient for reprenseting dense graphs (have a lot edges)
-    - Edge weight lookup is O(1)
-    - Simplest graph representation
-- Cons
-    - Space O(V^2)
-    - Iterating over all edges takes O(V^2)
+    - Pros
+        - Space efficient for reprenseting dense graphs (have a lot edges)
+        - Edge weight lookup is O(1)
+        - Simplest graph representation
+    - Cons
+        - Space O(V^2)
+        - Iterating over all edges takes O(V^2)
 
 2. Adjacency List
-- Pros
-    - Space efficient for representing sparse graphs (have a lot nodes)
-    - Iterating over all edges is efficient
-- Cons
-    - Less space-efficient for representing dense graphs
-    - Edge lookup is O(E)
-    - slightly more complex graph representation
+    - Pros
+        - Space efficient for representing sparse graphs (have a lot nodes)
+        - Iterating over all edges is efficient
+    - Cons
+        - Less space-efficient for representing dense graphs
+        - Edge lookup is O(E)
+        - slightly more complex graph representation
 
 #### DFS
-1. Marks grid[i][j] = '2' or seen.add(i) at the beginning of dfs and check boundaries, seen, and the condition for the next loop (grid[x][y] == '1')
-```python
-200. number of islands
+1. Marks node as seen(grid[i][j] = '2' or seen.add(i)) at the beginning of dfs and check boundaries, seen, and the condition for the next loop (grid[x][y] == '1')
+    ```python
+    200. number of islands
 
-class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        count = 0
-        if not grid:
-            return 0
-        m = len(grid)
-        n = len(grid[0])
+    class Solution:
+        def numIslands(self, grid: List[List[str]]) -> int:
+            count = 0
+            if not grid:
+                return 0
+            m = len(grid)
+            n = len(grid[0])
 
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == '1':
-                    count += 1
-                    self.dfs(grid, i, j)
-        return count
+            for i in range(m):
+                for j in range(n):
+                    if grid[i][j] == '1':
+                        count += 1
+                        self.dfs(grid, i, j)
+            return count
 
-    def dfs(self, grid, i, j):
-        grid[i][j] = '2'  # marks seen first
-        for _x, _y in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-            x = i + _x
-            y = j + _y
-            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == '1':
-                self.dfs(grid, x, y)
-```
+        def dfs(self, grid, i, j):
+            grid[i][j] = '2'  # marks seen first
+            for _x, _y in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                x = i + _x
+                y = j + _y
+                if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == '1':
+                    self.dfs(grid, x, y)
+    ```
 1. 如果dfs需要判断上一层的结果并返回，则把边界放到判断后面，下一个dfs遍历之前。
-```python
-79. word search
+    ```python
+    79. word search
 
-def dfs(self, board, i, j, word):
-    if not word:
-        return True
-    # 因为这里有判断，这个word是又前面的dfs生成的，对边界的判断应该放在最前面，如果没有判断word，例如计算island个数
-    # 那样的可以放在生成了新的x,y后面立马判断。
-    if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]):
-        return
-    if board[i][j] == "#" or board[i][j] != word[0]:  # Checks seen and next loop condition
-        return False
-    temp = board[i][j]
-    board[i][j] = "#"    # backtrack， marks node as seen
-    for x, y in [(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)]:
-        if self.dfs(board, x, y, word[1:]):
+    def dfs(self, board, i, j, word):
+        if not word:
             return True
-    board[i][j] = temp
-    return FalseF
-```
+        # 因为这里有判断，这个word是又前面的dfs生成的，对边界的判断应该放在最前面，如果没有判断word，例如计算island个数
+        # 那样的可以放在生成了新的x,y后面立马判断。
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]):
+            return
+        if board[i][j] == "#" or board[i][j] != word[0]:  # Checks seen and next loop condition
+            return False
+        temp = board[i][j]
+        board[i][j] = "#"    # backtrack， marks node as seen
+        for x, y in [(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)]:
+            if self.dfs(board, x, y, word[1:]):
+                return True
+        board[i][j] = temp
+        return FalseF
+    ```
 2. 使用memorization保存前面的计算
     - 如果是单个node的visits，直接使用dict
     - 如果是组合的dfs，例如Campus Bikes II，可以使用状态压缩，binary来保存key
@@ -172,59 +136,95 @@ def dfs(self, board, i, j, word):
         ```
 
 #### BFS
-
-```python
-def bfs(self, grid, r, c):
-        queue = collections.deque()
-        queue.append((r, c))
-        grid[r][c] = '0'    # Marks cur node as seen to avoid duplicated node in queue
-        while queue:
-            directions = [(0,1), (0,-1), (-1,0), (1,0)]
-            r, c = queue.popleft()
-            for d in directions:
-                nr, nc = r + d[0], c + d[1]    
-                if self.is_valid(grid, nr, nc) and grid[nr][nc] == '1':
-                    queue.append((nr, nc))
-                    grid[nr][nc] = '0'   # Marks cur node as seen to avoid duplicated node in queue
-
-# Calculates number of paths：
-def shortestPathBinaryMatrix(grid):
-    n = len(grid)
-    if grid[0][0] or grid[n-1][n-1]:
+1. A regular bfs uses queue to store nodes. Adds new node to queue and marks it as seen at the same time.
+    ```python
+    def bfs(self, grid, r, c):
+            queue = collections.deque()
+            queue.append((r, c))
+            grid[r][c] = '0'    # Marks cur node as seen to avoid duplicated node in queue
+            while queue:
+                directions = [(0,1), (0,-1), (-1,0), (1,0)]
+                r, c = queue.popleft()
+                for d in directions:
+                    nr, nc = r + d[0], c + d[1]    
+                    if self.is_valid(grid, nr, nc) and grid[nr][nc] == '1':
+                        queue.append((nr, nc))
+                        grid[nr][nc] = '0'   # Marks cur node as seen to avoid duplicated node in queue
+    ```
+2. Calculates number of paths
+    ```python
+    def shortestPathBinaryMatrix(grid):
+        n = len(grid)
+        if grid[0][0] or grid[n-1][n-1]:
+            return -1
+        q = collections.deque([(0, 0, 1)])
+        while q:
+            i, j, d = q.popleft()
+            if i == n-1 and j == n-1: 
+                return d
+            for x, y in ((i-1,j-1),(i-1,j),(i-1,j+1),(i,j-1),(i,j+1),(i+1,j-1),(i+1,j),(i+1,j+1)):
+                if 0 <= x < n and 0 <= y < n and not grid[x][y]:
+                    grid[x][y] = 1   # Marks cur node as seen before next loop
+                    q.append((x, y, d+1))
         return -1
-    q = collections.deque([(0, 0, 1)])
-    while q:
-        i, j, d = q.popleft()
-        if i == n-1 and j == n-1: 
-            return d
-        for x, y in ((i-1,j-1),(i-1,j),(i-1,j+1),(i,j-1),(i,j+1),(i+1,j-1),(i+1,j),(i+1,j+1)):
-            if 0 <= x < n and 0 <= y < n and not grid[x][y]:
-                grid[x][y] = 1   # Marks cur node as seen before next loop
-                q.append((x, y, d+1))
-    return -1
-```
+    ```
+
+#### Union Find
+1. Union Find
+    ```python
+    323. Number of Connected Components in an Undirected Graph
+
+    parent = [x for x in range(n)]
+
+    def find(x):  
+        if parent[x] != x:
+            parent[x] = find(parent[x])    # path compression
+        return parent[x]
+
+    def union(x, y):
+        p_x = find(x)
+        p_y = find(y)
+        if p_x != p_y:               
+            parent[p_y] = p_x
+            
+    for u, v in edges:
+        union(u, v)
+    ```
+
+2. Union Find By Rank
+    ```python
+    parent, rank = {}, {}
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    def union(x, y):
+        x, y = find(x), find(y)
+        if x != y:
+            if rank[x] < rank[y]:
+                x, y = y, x
+            parent[y] = x
+            rank[x] += rank[x] == rank[y]
+    ```
 
 #### Critical Connections
-```python
-# 需要找到critical-connections就是需要找不在环上面的边，他们都是critical-connections。
-# 所以我们走graph，然后记录rank，如果子节点的rank比当前节点的rank更小，证明当前是环内的连接，连到了原来走过的节点。我们更新当前节点到最小值
-# 如果子节点最后的rank是当前rank+1，证明这是一个线性的连接，就是critical-connections
+需要找到critical-connections就是需要找不在环上面的边，他们都是critical-connections。所以我们走graph，然后记录rank，如果子节点的rank比当前节点的rank更小，证明当前是环内的连接，连到了原来走过的节点。我们更新当前节点到最小值。如果子节点最后的rank是当前rank+1，证明这是一个线性的连接，就是critical-connections。
+- [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_critical_connections.py)
+- [Leetcode question example No.1192](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/1192.Critical_Connections_in_a_Network.py)
 
-# 例子看1192
-```
+#### Find Cycle in Directed Graph
+- [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_find_cycle.py)
 
-#### Find cycle in directed graph
-- [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_find_cycle.py)
-
-#### strongly connected component
-- Tarjan's
-    - [video](https://www.youtube.com/watch?v=wUgWX0nc4NY)
-    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_strongly_connected_component.py)
+#### Strongly Connected Component
+1. Tarjan's
+    - [Video](https://www.youtube.com/watch?v=wUgWX0nc4NY)
+    - [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_strongly_connected_component.py)
     - O(V+E)
 
-#### critical connections, bridge
-- [video](https://www.youtube.com/watch?v=aZXi1unBdJA)
-- [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_critical_connections.py)
+#### Critical Connections, Bridge
+- [Video](https://www.youtube.com/watch?v=aZXi1unBdJA)
+- [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_critical_connections.py)
 - O(V+E)
 
 #### Shortest Path Problem
@@ -233,13 +233,14 @@ def shortestPathBinaryMatrix(grid):
 2. Dijkstra's (non-negative acycles)
     - Only works for non-negative weights DAG
     - O((E+V)*LogV) = O(ELogV)
-    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_dijkstra.py)
+    - [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_dijkstra.py)
 3. Bellman-Ford (negative cycles)
-    - works if there is negative weight path, it could use to detect negative cycle
-    - steps
+    - Works if there is negative weight path, it could use to detect negative cycle
+    - Steps
         - set all node dist to inf
         - set dist[start] to 0
         - relax each edge V-1 times
+    - Code
         ```python
         for i in range(V-1):
             for edge in edges:
@@ -263,24 +264,24 @@ each shortest path can contain at most n−1 edges
     - It finds all shortest paths between the nodes in a single run, using dp to solve it and returns the shortest dist between two arbitrary nodes. 
     - Maintain a two-dimensional array that contains distances between the nodes. First the distances are calculated only using direct edges between nodes, and then the algorithm reduces disatances by using intermidiate nodes in the paths
     - dp[i][j] == dist between i, j, we need to know if there is an intermidiate node k that dp[i][j] > dp[i][k] + dp[k][j], if yes, update the dist and it is the shorter path.
-    - code
-    ```python
-    # initialze the dp first
-    n = len(V)
-    dp = [[float('inf')] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if i == j: dp[i][j] = 0 # node to itself has dist == 0
-            elif j in graph[i]: dp[i][j] = graph[i][j] # pupulate the cost
-
-    # update dp in a single run
-    for k in range(n):   # k is the intermidiate node
+    - Code
+        ```python
+        # initialze the dp first
+        n = len(V)
+        dp = [[float('inf')] * n for _ in range(n)]
         for i in range(n):
             for j in range(n):
-                dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j])
-    ```
-    - time O(n^3), only use it when the graph is small
-    - space O(n^2)
+                if i == j: dp[i][j] = 0 # node to itself has dist == 0
+                elif j in graph[i]: dp[i][j] = graph[i][j] # pupulate the cost
+
+        # update dp in a single run
+        for k in range(n):   # k is the intermidiate node
+            for i in range(n):
+                for j in range(n):
+                    dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j])
+        ```
+    - Time O(n^3), only use it when the graph is small
+    - Space O(n^2)
 
 5. A*
 
@@ -295,74 +296,73 @@ each shortest path can contain at most n−1 edges
 
 ### Traveling Salesman Problem
 1. Held-Karp
-2. branch and bound
+2. Branch and bound
 
 #### Topological Sort 
 1. Applications: Get the order of graph: class prerequisites, program dependencies. 
 1. Does not work for graphs with cycle
 1. Algorithm 1 dfs:
-    - pick an unvisited node
-    - begin with the selected node, do a dfs, exploring only unvisited nodes.
-    - on the recursive callback of dfs, add the current node to list
-    - reverse the list
+    - Pick an unvisited node
+    - Begin with the selected node, do a dfs, exploring only unvisited nodes.
+    - On the recursive callback of dfs, add the current node to list
+    - Reverse the list
 1. Algorithm 2 Kahn's Algorithm:
-    - count in degree for all node
-    - add nodes with in-degree == 0 to queue
-    - walkthrough the queue, add the current node to result, decrease the indegree for the next node, if indegree == 0, add to the queue.
-1. [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
+    - Count in degree for all node
+    - Add nodes with in-degree == 0 to queue
+    - Walkthrough the queue, add the current node to result, decrease the indegree for the next node, if indegree == 0, add to the queue.
+1. [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
 1. O(E+V)
 
 #### Eulerian Paths and Circuits
 1. Eulerian Path is a path that visits all edges in a graph exactly once
 2. Eulerian Circuit is an Eulerian Path that starts and ends on the same vertex
 3. Algorithm: if we can find the path, we can find the circuit
-    - verify if the graph has an eulerian path.
-    - find the start vertex
-    - dfs
-    - return path if len(path) == len(edges) + 1
-4. code: graph_eulerian_path.py
-5. examples:
-    - [332. Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)
+    - Verify if the graph has an eulerian path.
+    - Find the start vertex
+    - Dfs
+    - Return path if len(path) == len(edges) + 1
+4. [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_eulerian_path.py)
+5. [Leetcode question example No.332](https://leetcode.com/problems/reconstruct-itinerary/)
 
 
 ### Tree
-#### center of undirected tree
-[link](https://www.youtube.com/watch?v=nzF_9bjDzdc&list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&index=10)
+#### Center of Undirected Tree
 1. The center is always the middle vertex or middle two vertices in every longest path along the tree.
     - Get the middle of the longest path
 2. Another way is to iteratively pick off each leaf node layer like we're peeling an onion.
     - Computer the degree of each node. Each node will have a degree of 1
     - Prune nodes also reduce the node degree
-    - tree_find_center.py
+    - [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/tree_find_center.py)
+3. [Video](https://www.youtube.com/watch?v=nzF_9bjDzdc&list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&index=10)
 3. O(V+E)
 
 #### Identifying Isomorphic Trees
 1. Get the center of both trees
 2. Root both trees and encode them.
-    - encode: we use '()' to represent one node. If one node has two children. it should be '(()())', if it only has one child, it should be '(())'. When we create the tree parent encoding, the child needs to be sorted. '((())())' is correct but not '(()(()))'
+    - Encode: we use '()' to represent one node. If one node has two children. it should be '(()())', if it only has one child, it should be '(())'. When we create the tree parent encoding, the child needs to be sorted. '((())())' is correct but not '(()(()))'
 3. Compare the encode tree. We need to root the other tree using all the centers, since we might have two tree center.
+4. Code
+    ```python
+    def is_isomorphic(tree1, tree2):
+        if not tree1 or not tree2:
+            return
 
-```python
-def is_isomorphic(tree1, tree2):
-    if not tree1 or not tree2:
-        return
+        center1 = find_tree_center(tree1)
+        center2 = find_tree_center(tree2)
 
-    center1 = find_tree_center(tree1)
-    center2 = find_tree_center(tree2)
+        rooted_tree1 = root_tree(tree1, center1[0])  # dosen't matter which center
+        encoded_tree1 = encode_tree(rooted_tree1)
 
-    rooted_tree1 = root_tree(tree1, center1[0])  # dosen't matter which center
-    encoded_tree1 = encode_tree(rooted_tree1)
-
-    for center in center2:
-        rooted_tree2 = root_tree(tree2, center)
-        encoded_tree2 = encode_tree(rooted_tree2)
-        if encoded_tree1 == encoded_tree2:
-            return True
-    return False
-```
+        for center in center2:
+            rooted_tree2 = root_tree(tree2, center)
+            encoded_tree2 = encode_tree(rooted_tree2)
+            if encoded_tree1 == encoded_tree2:
+                return True
+        return False
+    ```
 
 
-### Two pointers
+### Two Pointers
 1. Sliding Window Problems
     - 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
     - 1425. Constrained Subsequence Sum
@@ -388,7 +388,7 @@ def is_isomorphic(tree1, tree2):
 
 
 ### Stack
-1. monotonic stack
+1. Monotonic stack
     - Constrained Subsequence Sum
     - Minimum Cost Tree From Leaf Values  #### star question
     - Sum of Subarray Minimums
@@ -399,7 +399,7 @@ def is_isomorphic(tree1, tree2):
     - Largest Rectangle in Histogram
     - Trapping Rain Water
 
-### Calculate 4 directions
+### Calculate Four Directions
 ```python
 # up
 dx, dy = 0, 1
@@ -416,12 +416,12 @@ row == col
 row+col == size-1
 ```
 
-### Binary search
-- [video](https://www.youtube.com/watch?v=UyFShaHNbNY)
-- [template](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/binary_search_example.py)
+### Binary Search
+- [Video](https://www.youtube.com/watch?v=UyFShaHNbNY)
+- [Template](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/binary_search_example.py)
 
 
-### 题目总结
+### Leetcode Questions
 1. Complete search
     - Generating subsets: 使用二进制0101011 （ 0:1<<n -1）生成组合，然后生成subset
     - Pruning the search: 矩阵能走过每个点一次的路径数量，可以优化：
@@ -429,7 +429,7 @@ row+col == size-1
         - 提前走到终点，该路径不符合条件
         - 如果走到一个点只能选两个方向中一个，证明一定会有另一边的路径不能走到，该路径不符合条件
     - Meet in the middle: 将任务分成两组，对于2^n任务来说可以优化时间
-    - permutations:
+    - Permutations:
     ```python
     # Function to print permutations of a string 
     # This function takes three parameters: 
@@ -479,7 +479,7 @@ row+col == size-1
     ```
 
 
-2. Greedy algorithms
+2. Greedy Algorithms
 Constructs a solution to the problem by always making a choice that looks the best at the moment.
     - Scheduling，计算可以去的最多的meeting：每次选择结束最早的meeting
     - Tasks and deadlines，每次选择耗时最短的
@@ -514,8 +514,8 @@ subsets with some properties have to be found.
         - 当前点只取决于与前一个比较，删减，添加，还是替换
         - distance(a,b) = min(distance(a,b −1)+1, distance(a−1,b)+1, distance(a−1,b −1)+cost(a,b))
 
-4. Amortized analysis
-    - stack， 单调栈
+4. Amortized Analysis
+    - Stack， Monotonic stack
         - Nearest smaller elements
             - 需要返回每个数最近的最小值，1 3 4 2 5 3 4 2 -> 0 1 3 1 2 2 3 1
             - 规律：当后面出现有更小的值k，前面的比k大的所有数都不需要考虑
@@ -526,7 +526,7 @@ subsets with some properties have to be found.
             - 维护一个Sliding window里的单调栈
 
 
-5. Range queries
+5. Range Queries
     - sum(a,b): calculate the sum of values in range [a,b]
         - for static array, use pre sum
     - min(a,b): find the minimum value in range [a,b]
@@ -539,7 +539,7 @@ b − a+1, minq(a,b) = min(minq(a,a+ k −1),minq(b − k +1,b)).
     - Binary indexed tree (对需要更新的list，logn更新, logn计算区间sum)
         - can be seen as a dynamic variant of a prefix sum array
         - O(logn) time operations on return array sum and updating a value.
-        - [link](https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/)
+        - [Link](https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/)
 
     - Segment tree
         - support updating an array value, support sum queries, minimum and maximum queries in O(logn) time
