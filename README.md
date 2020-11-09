@@ -35,7 +35,7 @@ This repo contains my solutions and notes for 600+ leetcode questions mainly in 
     - The graph must be Directed Acyclic Graph (DAG).
     - For instance, the vertices of the graph may represent tasks to be performed, and the edges may represent constraints that one task must be performed before another; in this application, a topological ordering is just a valid sequence for the tasks.
     - Find Eulerian path, school class prerequisites, visit location order
-    - code: graph_topological_sort.py
+    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
     
 7. [Karnaugh Maps](https://en.wikipedia.org/wiki/Karnaugh_map)
     - The Karnaugh map (KM or K-map) is a method of simplifying Boolean algebra expressions.
@@ -86,25 +86,25 @@ def union(x, y):
 ### Graph
 #### Representation
 1. Adjacency Matrix
-##### Pros
-- Space efficient for reprenseting dense graphs (have a lot edges)
-- Edge weight lookup is O(1)
-- Simplest graph representation
-##### Cons
-- Space O(V^2)
-- Iterating over all edges takes O(V^2)
+- Pros
+    - Space efficient for reprenseting dense graphs (have a lot edges)
+    - Edge weight lookup is O(1)
+    - Simplest graph representation
+- Cons
+    - Space O(V^2)
+    - Iterating over all edges takes O(V^2)
 
 2. Adjacency List
-##### Pros
-- Space efficient for representing sparse graphs (have a lot nodes)
-- Iterating over all edges is efficient
-##### Cons
-- Less space-efficient for representing dense graphs
-- Edge lookup is O(E)
-- slightly more complex graph representation
+- Pros
+    - Space efficient for representing sparse graphs (have a lot nodes)
+    - Iterating over all edges is efficient
+- Cons
+    - Less space-efficient for representing dense graphs
+    - Edge lookup is O(E)
+    - slightly more complex graph representation
 
 #### DFS
-1. dfs 一开始就做操作 grid[i][j] = '2' || seen.add(i), 递归的时候判断 边界 + 判断seen + 判断下一个loop条件 grid[x][y] == '1'
+1. Marks grid[i][j] = '2' or seen.add(i) at the beginning of dfs and check boundaries, seen, and the condition for the next loop (grid[x][y] == '1')
 ```python
 200. number of islands
 
@@ -124,11 +124,11 @@ class Solution:
         return count
 
     def dfs(self, grid, i, j):
-        grid[i][j] = '2'  # 首先记录seen
+        grid[i][j] = '2'  # marks seen first
         for _x, _y in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
             x = i + _x
             y = j + _y
-            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == '1':  # 这里因为走过的改成了'2'所以只要判断？= '1'相当于判断了seen和当前val
+            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == '1':
                 self.dfs(grid, x, y)
 ```
 1. 如果dfs需要判断上一层的结果并返回，则把边界放到判断后面，下一个dfs遍历之前。
@@ -142,10 +142,10 @@ def dfs(self, board, i, j, word):
     # 那样的可以放在生成了新的x,y后面立马判断。
     if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]):
         return
-    if board[i][j] == "#" or board[i][j] != word[0]:  # 判断seen 及条件
+    if board[i][j] == "#" or board[i][j] != word[0]:  # Checks seen and next loop condition
         return False
     temp = board[i][j]
-    board[i][j] = "#"    # backtrack， 记录seen
+    board[i][j] = "#"    # backtrack， marks node as seen
     for x, y in [(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)]:
         if self.dfs(board, x, y, word[1:]):
             return True
@@ -153,18 +153,18 @@ def dfs(self, board, i, j, word):
     return FalseF
 ```
 2. 使用memorization保存前面的计算
-    1. 如果是单个node的visits，直接使用dict
-    2. 如果是组合的dfs，例如Campus Bikes II，可以使用状态压缩，binary来保存key
+    - 如果是单个node的visits，直接使用dict
+    - 如果是组合的dfs，例如Campus Bikes II，可以使用状态压缩，binary来保存key
         ```python
-        # 如果是n个数的组合，0000， 可以有1<<n种状态
+        # Thre is 1<<n valid status
         mo = [0] * (1<<n)  
 
         # ---------------
         if mo[state] != 0:
             return mo[state]
 
-        if state & (1<<j) == 0:  # 意味这j没有被访问过
-            st = state | (1<<j)  # 加入j生成新的状态
+        if state & (1<<j) == 0:  # This condition means j is not visited
+            st = state | (1<<j)  # Adds j and creates new status
             res = dfs(st, xxxx)
 
         mo[state] = res
@@ -177,7 +177,7 @@ def dfs(self, board, i, j, word):
 def bfs(self, grid, r, c):
         queue = collections.deque()
         queue.append((r, c))
-        grid[r][c] = '0'    # 加入queue就立马标记visits，不会有重复的在queue里，效率更高
+        grid[r][c] = '0'    # Marks cur node as seen to avoid duplicated node in queue
         while queue:
             directions = [(0,1), (0,-1), (-1,0), (1,0)]
             r, c = queue.popleft()
@@ -185,9 +185,9 @@ def bfs(self, grid, r, c):
                 nr, nc = r + d[0], c + d[1]    
                 if self.is_valid(grid, nr, nc) and grid[nr][nc] == '1':
                     queue.append((nr, nc))
-                    grid[nr][nc] = '0'   # 加入queue就标记visits，不会有重复的在queue里，效率更高
+                    grid[nr][nc] = '0'   # Marks cur node as seen to avoid duplicated node in queue
 
-# 包含路径数目计算：
+# Calculates number of paths：
 def shortestPathBinaryMatrix(grid):
     n = len(grid)
     if grid[0][0] or grid[n-1][n-1]:
@@ -199,7 +199,7 @@ def shortestPathBinaryMatrix(grid):
             return d
         for x, y in ((i-1,j-1),(i-1,j),(i-1,j+1),(i,j-1),(i,j+1),(i+1,j-1),(i+1,j),(i+1,j+1)):
             if 0 <= x < n and 0 <= y < n and not grid[x][y]:
-                grid[x][y] = 1   # 加入q同时立马标记seen才不会出错
+                grid[x][y] = 1   # Marks cur node as seen before next loop
                 q.append((x, y, d+1))
     return -1
 ```
@@ -214,19 +214,18 @@ def shortestPathBinaryMatrix(grid):
 ```
 
 #### Find cycle in directed graph
-[code]()
-graph_find_cycle.py
+- [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_find_cycle.py)
 
 #### strongly connected component
-- [video](https://www.youtube.com/watch?v=wUgWX0nc4NY)
-1. Tarjan's
-    - graph_strongly_connected_component.py
+- Tarjan's
+    - [video](https://www.youtube.com/watch?v=wUgWX0nc4NY)
+    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_strongly_connected_component.py)
     - O(V+E)
 
 #### critical connections, bridge
 - [video](https://www.youtube.com/watch?v=aZXi1unBdJA)
-graph_critical_connections.py
-O(V+E)
+- [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_critical_connections.py)
+- O(V+E)
 
 #### Shortest Path Problem
 1. BFS (unweighted graph)
@@ -234,7 +233,7 @@ O(V+E)
 2. Dijkstra's (non-negative acycles)
     - Only works for non-negative weights DAG
     - O((E+V)*LogV) = O(ELogV)
-    - code: graph_dijkstra.py
+    - [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_dijkstra.py)
 3. Bellman-Ford (negative cycles)
     - works if there is negative weight path, it could use to detect negative cycle
     - steps
@@ -288,7 +287,6 @@ each shortest path can contain at most n−1 edges
 #### Connectivity
 1. Union find
     - Counting Number of connections using graph
-    - 给定顶点之间connections, 求相连组件的数量
 2. DFS / BFS
 
 #### Negative Cycles
@@ -303,15 +301,15 @@ each shortest path can contain at most n−1 edges
 1. Applications: Get the order of graph: class prerequisites, program dependencies. 
 1. Does not work for graphs with cycle
 1. Algorithm 1 dfs:
-    1. pick an unvisited node
-    2. begin with the selected node, do a dfs, exploring only unvisited nodes.
-    3. on the recursive callback of dfs, add the current node to list
-    4. reverse the list
+    - pick an unvisited node
+    - begin with the selected node, do a dfs, exploring only unvisited nodes.
+    - on the recursive callback of dfs, add the current node to list
+    - reverse the list
 1. Algorithm 2 Kahn's Algorithm:
-    1. count in degree for all node
-    2. add nodes with in-degree == 0 to queue
-    3. walkthrough the queue, add the current node to result, decrease the indegree for the next node, if indegree == 0, add to the queue.
-1. code: graph_topological_sort.py
+    - count in degree for all node
+    - add nodes with in-degree == 0 to queue
+    - walkthrough the queue, add the current node to result, decrease the indegree for the next node, if indegree == 0, add to the queue.
+1. [code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/graph_topological_sort.py)
 1. O(E+V)
 
 #### Eulerian Paths and Circuits
@@ -341,7 +339,7 @@ each shortest path can contain at most n−1 edges
 #### Identifying Isomorphic Trees
 1. Get the center of both trees
 2. Root both trees and encode them.
-    1. encode: we use '()' to represent one node. If one node has two children. it should be '(()())', if it only has one child, it should be '(())'. When we create the tree parent encoding, the child needs to be sorted. '((())())' is correct but not '(()(()))'
+    - encode: we use '()' to represent one node. If one node has two children. it should be '(()())', if it only has one child, it should be '(())'. When we create the tree parent encoding, the child needs to be sorted. '((())())' is correct but not '(()(()))'
 3. Compare the encode tree. We need to root the other tree using all the centers, since we might have two tree center.
 
 ```python
@@ -365,7 +363,7 @@ def is_isomorphic(tree1, tree2):
 
 
 ### Two pointers
-- Sliding Window Problems
+1. Sliding Window Problems
     - 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
     - 1425. Constrained Subsequence Sum
     - 1358. Number of Substrings Containing All Three Characters
@@ -390,16 +388,16 @@ def is_isomorphic(tree1, tree2):
 
 
 ### Stack
-    - monotonic stack
-        - Constrained Subsequence Sum
-        - Minimum Cost Tree From Leaf Values  #### star question
-        - Sum of Subarray Minimums
-        - Online Stock Span
-        - Score of Parentheses
-        - Next Greater Element II
-        - Next Greater Element I
-        - Largest Rectangle in Histogram
-        - Trapping Rain Water
+1. monotonic stack
+    - Constrained Subsequence Sum
+    - Minimum Cost Tree From Leaf Values  #### star question
+    - Sum of Subarray Minimums
+    - Online Stock Span
+    - Score of Parentheses
+    - Next Greater Element II
+    - Next Greater Element I
+    - Largest Rectangle in Histogram
+    - Trapping Rain Water
 
 ### Calculate 4 directions
 ```python
@@ -419,9 +417,8 @@ row+col == size-1
 ```
 
 ### Binary search
-https://www.youtube.com/watch?v=UyFShaHNbNY
-template:
-leetcode_python/binary_search_example.py
+- [video](https://www.youtube.com/watch?v=UyFShaHNbNY)
+- [template](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/binary_search_example.py)
 
 
 ### 题目总结
