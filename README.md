@@ -419,6 +419,10 @@ row+col == size-1
 ### Binary Search
 - [Video](https://www.youtube.com/watch?v=UyFShaHNbNY)
 - [Template](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/binary_search_example.py)
+- [find left/right bound](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/bisection_algorithm.py)
+
+### Maths
+- [Code](https://github.com/zihuaweng/leetcode-solutions/blob/master/leetcode_python/math_leetcode.py)
 
 
 ### Leetcode Questions
