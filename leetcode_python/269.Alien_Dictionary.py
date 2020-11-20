@@ -11,47 +11,73 @@
 class Solution:
     def alienOrder(self, words: List[str]) -> str:
         """
-        1. build graph
-            find the order
-        wrt wrf.  t -> f
-        er ett   r->t
-        w -> e
-        e->r
-        
-        compare each word with the next word, find the first diff char
-    
-        2. topological sort
-            count indegree for each char
-            start with node with 0 indegree, -1 if we visit the node
-            keep adding node with 0 indegree
-        w e r t f
-        
+          "wrt",
+          "wrf",
+          "er",
+          "ett",
+          "rftt"
+          
+          t < f
+          w < e
+          r < t
+          e < r
+          w < f
+          
+          t f w e r 
+          1 2   1 1
+          
+          wertf
+          
+          topological sort
+          1. build graph:
+            1. compare the word, get the first index with diff char in both words
+                1. prev -> next
+                2. indegree[next] += 1, defaultdict, default is 0
+          2. get order 
+            1. create a queue with indegree[node] == 0
+            1. visit nodes in queue
+                add node to the result
+            2. visit the next node
+                indegree[next] -= 1
+                if indegree[next] == 0, add the node to the queue
+                
+        corner case:
+            1. has cycle: order is invalid, return empty
+            2. len(words) <= 1: return empty
+            3. len(prev) > len(next), and next.startswith(prev): return empty
+                
         """
         # build graph
-        in_degree = {}        
-        for w in words:
-            for c in w:
-                in_degree[c] = 0    # important for ['z', 'z'] case
-                
         graph = collections.defaultdict(set)
+        indegree = {}
+        for word in words:
+            for c in word:
+                indegree[c] = 0  # need to have get the indegree[node] == 0
+        
         for i in range(1, len(words)):
-            a = words[i-1]
-            b = words[i]
-            if len(a) > len(b) and a.startswith(b):
+            first = words[i-1]
+            second = words[i]
+            if len(first) > len(second) and first.startswith(second):
                 return ''
-            for j in range(min(len(a), len(b))):
-                if a[j] != b[j]:
-                    if b[j] not in graph[a[j]]:   # in case we add duplicated keys
-                        graph[a[j]].add(b[j])
-                        in_degree[b[j]] += 1
+            
+            for j in range(min(len(first), len(second))):
+                if first[j] != second[j]:
+                    if second[j] not in graph[first[j]]:
+                        graph[first[j]].add(second[j])
+                        indegree[second[j]] += 1
                     break
-                        
-        # read graph
-        queue = [w for w, count in in_degree.items() if count == 0]
-        for q in queue:
-            for c in graph[q]:
-                in_degree[c] -= 1
-                if in_degree[c] == 0:
-                    queue.append(c)
                     
-        return ''.join(queue) if len(queue) == len(in_degree) else ""
+        # get order
+        queue = [node for node in indegree if indegree[node] == 0]
+        res = ''
+        for node in queue:
+            res += node
+            for next_node in graph[node]:
+                indegree[next_node] -= 1
+                if indegree[next_node] == 0:
+                    queue.append(next_node)
+                    
+        # check cycle
+        if len(res) == len(indegree):
+            return res
+        return ''

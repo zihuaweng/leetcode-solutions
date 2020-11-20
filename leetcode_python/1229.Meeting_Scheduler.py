@@ -6,6 +6,10 @@ class Solution:
         """
         time O(nlogn), n = len(slots1)+len(slots2)  
         space O(n)
+        
+          |--|___|------|  ____  _____
+        __|--|.  |------|____
+        
         """
         slots1.sort()
         slots2.sort()
