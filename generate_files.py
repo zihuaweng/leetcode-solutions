@@ -1,7 +1,7 @@
 import os
 
-input = "3. Longest Substring Without Repeating Characters"
-website = "// https://leetcode.com/problems/longest-substring-without-repeating-characters/"
+input = "124. Binary Tree Maximum Path Sum"
+website = "// https://leetcode.com/problems/binary-tree-maximum-path-sum/"
 
 surfix = [
   ["java", "leetcode_java"], 
