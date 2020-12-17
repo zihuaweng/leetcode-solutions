@@ -1,7 +1,7 @@
 import os
 
-input = "124. Binary Tree Maximum Path Sum"
-website = "// https://leetcode.com/problems/binary-tree-maximum-path-sum/"
+input = "146. LRU Cache"
+website = "// https://leetcode.com/problems/lru-cache/"
 
 surfix = [
   ["java", "leetcode_java"], 
