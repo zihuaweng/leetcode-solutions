@@ -1,7 +1,7 @@
 import os
 
-input = "200. Number of Islands"
-website = "// https://leetcode.com/problems/number-of-islands/"
+input = "208. Implement Trie (Prefix Tree)"
+website = "// https://leetcode.com/problems/implement-trie-prefix-tree/"
 
 surfix = [
   ["java", "leetcode_java"], 
