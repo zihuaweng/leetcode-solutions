@@ -17,6 +17,7 @@ This repo contains my solutions and notes for 600+ leetcode questions mainly in 
 1. [Java fishercoder1534](https://github.com/fishercoder1534/Leetcode)
 2. [C++ wisdompeak](https://github.com/wisdompeak/LeetCode)
 3. [Go halfrost](https://github.com/halfrost/LeetCode-Go/tree/master/leetcode)
+2. [Go aQuaYi](https://github.com/aQuaYi/LeetCode-in-Go)
 
 ## Algorithms
 1. [Rolling Hashing](https://www.youtube.com/watch?v=BQ9E-2umSWc)

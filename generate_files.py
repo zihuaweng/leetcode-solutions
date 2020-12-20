@@ -1,7 +1,7 @@
 import os
 
-input = "146. LRU Cache"
-website = "// https://leetcode.com/problems/lru-cache/"
+input = "200. Number of Islands"
+website = "// https://leetcode.com/problems/number-of-islands/"
 
 surfix = [
   ["java", "leetcode_java"], 
