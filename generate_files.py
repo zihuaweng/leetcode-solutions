@@ -1,7 +1,7 @@
 import os
 
-input = "208. Implement Trie (Prefix Tree)"
-website = "// https://leetcode.com/problems/implement-trie-prefix-tree/"
+input = "322. Coin Change"
+website = "// https://leetcode.com/problems/coin-change/"
 
 surfix = [
   ["java", "leetcode_java"], 
