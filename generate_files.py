@@ -1,7 +1,7 @@
 import os
 
-input = "322. Coin Change"
-website = "// https://leetcode.com/problems/coin-change/"
+input = "94. Binary Tree Inorder Traversal"
+website = "// https://leetcode.com/problems/binary-tree-inorder-traversal/"
 
 surfix = [
   ["java", "leetcode_java"], 
